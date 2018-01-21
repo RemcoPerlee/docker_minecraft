@@ -2,24 +2,18 @@ FROM remcoperlee/base:0.1.0
 MAINTAINER Remco Perlee <remco.perlee@gmail.com>
 
 RUN apt-get update && apt-get install -y \
-  # libmozjs-24-bin \
   imagemagick \
   lsof \
   wget \
   debconf-utils \
   openjdk-9-jdk
-# RUN update-alternatives --install /usr/bin/js js /usr/bin/js24 100
+
+# NodeJS
+RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
+RUN apt-get install -y nodejs
 
 RUN wget -O /usr/bin/jsawk https://github.com/micha/jsawk/raw/master/jsawk
 RUN chmod +x /usr/bin/jsawk
-
-# Java 1.8
-# RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee /etc/apt/sources.list.d/webupd8team-java.list
-# RUN echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
-# RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
-# Auto accept license agreement
-# RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-# RUN apt-get update && apt-get install -yq oracle-java8-installer
 
 # add users & set directories
 RUN useradd -M -s /bin/false --uid 1000 minecraft \
